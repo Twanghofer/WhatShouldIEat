@@ -1,0 +1,13 @@
+mat-expansion-panel {
+  margin: 18px 0;
+}
+
+mat-expansion-panel img {
+  height: 250px;
+  object-fit: cover;
+}
+
+mat-expansion-panel img:last-child:nth-child(odd) {
+  width: 100%;
+  max-width: unset !important;
+}
