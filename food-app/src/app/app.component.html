@@ -1,0 +1,19 @@
+<h1 class="mat-display-4">What should I eat today?</h1>
+
+<mat-expansion-panel *ngFor="let recipe of recipes">
+  <mat-expansion-panel-header>
+    <mat-panel-title> {{ recipe.name }}</mat-panel-title>
+    <mat-panel-description>
+      {{ recipe.description.short }}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <p>{{ recipe.description.long }}</p>
+  <div fxLayout="row wrap">
+    <img *ngFor="let img of recipe.images" [src]="img" fxFlex="50%" />
+  </div>
+
+  <mat-action-row>
+    <button mat-button>Click me</button>
+  </mat-action-row>
+</mat-expansion-panel>
