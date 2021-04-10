@@ -1,7 +1,6 @@
-export const recipes = [
+export const lunchRecipes = [
   {
-    name: 'Quinoa Bowl Thingy',
-    rating: 10,
+    name: 'Lunch 1',
     description: {
       short: 'A large phone with one of the best screens',
       long:
@@ -15,8 +14,7 @@ export const recipes = [
     ],
   },
   {
-    name: 'Avocado',
-    rating: 1,
+    name: 'Lunch 2',
     description: {
       short: 'A large phone with one of the best screens',
       long:
@@ -26,8 +24,7 @@ export const recipes = [
     images: ['../assets/img/1.jpg', '../assets/img/2.jpg'],
   },
   {
-    name: 'Guacamole',
-    rating: 5,
+    name: 'Lunch 3',
     description: {
       short: 'A large phone with one of the best screens',
       long:

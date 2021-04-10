@@ -1,19 +1,32 @@
 <h1 class="mat-display-4">What should I eat today?</h1>
 
-<mat-expansion-panel *ngFor="let recipe of recipes">
-  <mat-expansion-panel-header>
-    <mat-panel-title> {{ recipe.name }}</mat-panel-title>
-    <mat-panel-description>
-      {{ recipe.description.short }}
-    </mat-panel-description>
-  </mat-expansion-panel-header>
+<div fxLayout="column" fxLayoutGap="20px">
+  <mat-expansion-panel *ngFor="let recipeType of recipeTypes; index as i">
+    <mat-expansion-panel-header>
+      <mat-panel-title fxFlex="25">
+        {{ recipeType.recipes[recipeIndices[i]].name }}</mat-panel-title
+      >
+      <mat-panel-description fxFlex="70" fxLayoutAlign="space-between center">
+        {{ recipeType.recipes[recipeIndices[i]].description.short }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
 
-  <p>{{ recipe.description.long }}</p>
-  <div fxLayout="row wrap">
-    <img *ngFor="let img of recipe.images" [src]="img" fxFlex="50%" />
-  </div>
+    <p>{{ recipeType.recipes[recipeIndices[i]].description.long }}</p>
+    <div fxLayout="row wrap">
+      <img
+        *ngFor="let img of recipeType.recipes[recipeIndices[i]].images"
+        [src]="img"
+        fxFlex="50%"
+      />
+    </div>
 
-  <mat-action-row>
-    <button mat-button>Click me</button>
-  </mat-action-row>
-</mat-expansion-panel>
+    <mat-action-row>
+      <button mat-button (click)="getNewRecipe(i)">
+        <i class="material-icons">shuffle</i>
+      </button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</div>
+<button mat-raised-button (click)="getRandomRecipes()">
+  <i class="material-icons">shuffle</i>
+</button>
