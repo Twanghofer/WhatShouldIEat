@@ -12,12 +12,12 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   recipeTypes = [
     {
-      name: 'Breakfast Recipes',
+      name: 'Breakfast',
       recipes: breakfastRecipes,
     },
-    { name: 'Lunch Recipes', recipes: lunchRecipes },
+    { name: 'Lunch', recipes: lunchRecipes },
     {
-      name: 'Dinner Recipes',
+      name: 'Dinner',
       recipes: dinnerRecipes,
     },
   ];
@@ -49,6 +49,26 @@ export class AppComponent implements OnInit {
     if (this.recipeIndices[index] === oldIndex) {
       this.getNewRecipe(index);
     }
+  }
+
+  getRecipeRating(rating: number, maxRating: number) {
+    const stars = [];
+
+    let starsRemaining = rating;
+
+    for (let i = 0; i < maxRating; i++) {
+      let star = 0;
+      if (starsRemaining >= 1) {
+        star = 1;
+      } else if (starsRemaining > 0) {
+        star = 0.5;
+      }
+
+      stars.push(star);
+      starsRemaining--;
+    }
+
+    return stars;
   }
 
   ngOnInit() {

@@ -1,32 +1,90 @@
-<h1 class="mat-display-4">What should I eat today?</h1>
+<main>
+  <h1 class="mat-display-3">What should I eat today?</h1>
 
-<div fxLayout="column" fxLayoutGap="20px">
-  <mat-expansion-panel *ngFor="let recipeType of recipeTypes; index as i">
-    <mat-expansion-panel-header>
-      <mat-panel-title fxFlex="25">
-        {{ recipeType.recipes[recipeIndices[i]].name }}</mat-panel-title
+  <div fxLayout="column" fxLayoutGap="35px">
+    <div
+      *ngFor="let recipeType of recipeTypes; index as i"
+      fxLayout="column"
+      fxLayoutGap="15px"
+    >
+      <h1>{{ recipeType.name }}</h1>
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutGap="15px"
+        fxLayoutAlign="start start"
       >
-      <mat-panel-description fxFlex="70" fxLayoutAlign="space-between center">
-        {{ recipeType.recipes[recipeIndices[i]].description.short }}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
+        <mat-expansion-panel fxFlex="1 2 auto">
+          <mat-expansion-panel-header>
+            <mat-panel-title fxFlex="25" fxLayoutAlign="start center">
+              {{ recipeType.recipes[recipeIndices[i]].name }}</mat-panel-title
+            >
+            <mat-panel-description
+              fxFlex="40"
+              fxFlex.sm="60"
+              fxFlex.xs="60"
+              fxLayoutAlign="space-between center"
+            >
+              <div>
+                <ng-container
+                  *ngFor="
+                    let star of getRecipeRating(
+                      recipeType.recipes[recipeIndices[i]].rating,
+                      5
+                    )
+                  "
+                  [ngSwitch]="star"
+                >
+                  <i *ngSwitchCase="0.5" class="material-icons">star_half</i>
+                  <i *ngSwitchCase="1" class="material-icons">star</i>
+                  <i *ngSwitchDefault class="material-icons">star_border</i>
+                </ng-container>
+              </div>
+              <div>
+                <ng-container
+                  *ngFor="
+                    let star of getRecipeRating(
+                      recipeType.recipes[recipeIndices[i]].time,
+                      3
+                    )
+                  "
+                  [ngSwitch]="star"
+                >
+                  <i *ngSwitchCase="1" class="material-icons">watch_later</i>
+                  <i *ngSwitchDefault class="material-icons">schedule</i>
+                </ng-container>
+              </div>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
 
-    <p>{{ recipeType.recipes[recipeIndices[i]].description.long }}</p>
-    <div fxLayout="row wrap">
-      <img
-        *ngFor="let img of recipeType.recipes[recipeIndices[i]].images"
-        [src]="img"
-        fxFlex="50%"
-      />
+          <p>{{ recipeType.recipes[recipeIndices[i]].description }}</p>
+          <div fxLayout="row wrap">
+            <img
+              *ngFor="let img of recipeType.recipes[recipeIndices[i]].images"
+              [src]="img"
+              fxFlex="50%"
+            />
+          </div>
+
+          <mat-action-row>
+            <a
+              mat-raised-button
+              [href]="recipeType.recipes[recipeIndices[i]].url"
+              target="_blank"
+            >
+              Zum Rezept
+            </a>
+          </mat-action-row>
+        </mat-expansion-panel>
+        <button mat-button (click)="getNewRecipe(i)" class="full-width-mobile">
+          <a class="mobile-only">Get Random </a>
+          <i class="material-icons">shuffle</i>
+        </button>
+      </div>
     </div>
-
-    <mat-action-row>
-      <button mat-button (click)="getNewRecipe(i)">
-        <i class="material-icons">shuffle</i>
-      </button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</div>
-<button mat-raised-button (click)="getRandomRecipes()">
-  <i class="material-icons">shuffle</i>
-</button>
+    <button mat-raised-button (click)="getRandomRecipes()">
+      Randomize All
+      <i class="material-icons">shuffle</i>
+    </button>
+  </div>
+</main>
