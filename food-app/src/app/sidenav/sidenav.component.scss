@@ -1,0 +1,25 @@
+@import "src/material-theme.scss";
+
+.sidenav {
+  width: 250px;
+}
+
+.nav {
+  mat-icon,
+  a {
+    color: map-get($primary, 500);
+  }
+
+  .active,
+  a:not(.toggle):hover,
+  .active mat-icon,
+  a:not(.toggle):hover mat-icon {
+    color: white;
+    background-color: map-get($primary, 500);
+  }
+
+  a {
+    text-decoration: none;
+    cursor: pointer;
+  }
+}

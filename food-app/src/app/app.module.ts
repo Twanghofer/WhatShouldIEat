@@ -7,9 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularMaterialModule } from '../assets/angular-material.module';
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { MealGeneratorComponent } from './meal-generator/meal-generator.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, SidenavComponent, MealGeneratorComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

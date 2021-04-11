@@ -1,0 +1,26 @@
+<section [class.sidenav]="isExpanded">
+  <div fxFlexLayout="column" fxLayoutAlign="center center"></div>
+  <mat-list class="nav">
+    <a mat-list-item class="toggle">
+      <mat-icon (click)="toggleMenu.emit(null)" mat-list-icon>
+        {{ isExpanded ? "keyboard_backspace" : "dehaze" }}
+      </mat-icon>
+    </a>
+    <a
+      mat-list-item
+      *ngFor="let route of routeLinks"
+      [routerLinkActiveOptions]="{ exact: true }"
+      routerLinkActive="active"
+      routerLink="{{ route.link }}"
+    >
+      <mat-icon
+        mat-list-icon
+        [matTooltip]="!isExpanded ? route.name : ''"
+        matTooltipPosition="right"
+      >
+        {{ route.icon }}</mat-icon
+      >
+      <p matLine *ngIf="isExpanded">{{ route.name }}</p>
+    </a>
+  </mat-list>
+</section>
