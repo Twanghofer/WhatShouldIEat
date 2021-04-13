@@ -1,15 +1,13 @@
 <main>
   <h1 class="mat-display-2">Meal Generator</h1>
 
-  <h2>Filter:</h2>
-
   <div fxLayout="column" fxLayoutGap="35px">
     <div
-      *ngFor="let recipeType of recipeTypes; index as i"
+      *ngFor="let meals of mealCategories; index as i"
       fxLayout="column"
       fxLayoutGap="15px"
     >
-      <h1>{{ recipeType.name }}</h1>
+      <h1 class="font-capital">{{ meals[mealIndices[i]].category }}</h1>
       <div
         fxLayout="row"
         fxLayout.xs="column"
@@ -19,7 +17,7 @@
         <mat-expansion-panel fxFlex="1 2 auto">
           <mat-expansion-panel-header>
             <mat-panel-title fxFlex="25" fxLayoutAlign="start center">
-              {{ recipeType.recipes[recipeIndices[i]].name }}</mat-panel-title
+              {{ meals[mealIndices[i]].name }}</mat-panel-title
             >
             <mat-panel-description
               fxFlex="40"
@@ -30,10 +28,7 @@
               <div>
                 <ng-container
                   *ngFor="
-                    let star of getRecipeRating(
-                      recipeType.recipes[recipeIndices[i]].rating,
-                      5
-                    )
+                    let star of getRecipeRating(meals[mealIndices[i]].rating)
                   "
                   [ngSwitch]="star"
                 >
@@ -44,13 +39,8 @@
               </div>
               <div>
                 <ng-container
-                  *ngFor="
-                    let star of getRecipeRating(
-                      recipeType.recipes[recipeIndices[i]].time,
-                      3
-                    )
-                  "
-                  [ngSwitch]="star"
+                  *ngFor="let time of getRecipeTime(meals[mealIndices[i]].time)"
+                  [ngSwitch]="time"
                 >
                   <i *ngSwitchCase="1" class="material-icons">watch_later</i>
                   <i *ngSwitchDefault class="material-icons">schedule</i>
@@ -59,19 +49,19 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
 
-          <p>{{ recipeType.recipes[recipeIndices[i]].description }}</p>
+          <p>{{ meals[mealIndices[i]].description }}</p>
           <div fxLayout="row wrap">
-            <img
-              *ngFor="let img of recipeType.recipes[recipeIndices[i]].images"
-              [src]="img"
-              fxFlex="50%"
-            />
+            <ng-container
+              *ngFor="let img of meals[mealIndices[i]].images; index as a"
+            >
+              <img *ngIf="a < 3" [src]="img" fxFlex="50%" />
+            </ng-container>
           </div>
 
           <mat-action-row>
             <a
               mat-raised-button
-              [href]="recipeType.recipes[recipeIndices[i]].url"
+              [href]="meals[mealIndices[i]].url"
               target="_blank"
             >
               Zum Rezept

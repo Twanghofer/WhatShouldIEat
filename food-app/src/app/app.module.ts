@@ -1,3 +1,4 @@
+import { MealService } from './../assets/meal.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -7,11 +8,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularMaterialModule } from '../assets/angular-material.module';
-import { SidenavComponent } from './sidenav/sidenav.component';
+import { SideNavComponent } from './side-nav/side-nav.component';
 import { MealGeneratorComponent } from './meal-generator/meal-generator.component';
+import { MealListComponent } from './meal-list/meal-list.component';
 
 @NgModule({
-  declarations: [AppComponent, SidenavComponent, MealGeneratorComponent],
+  declarations: [
+    AppComponent,
+    SideNavComponent,
+    MealGeneratorComponent,
+    MealListComponent,
+    SideNavComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -19,7 +27,7 @@ import { MealGeneratorComponent } from './meal-generator/meal-generator.componen
     FlexLayoutModule,
     AngularMaterialModule,
   ],
-  providers: [],
+  providers: [MealService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -46,6 +46,10 @@ mat-sidenav[style] {
   width: 100%;
 }
 
+.font-capital {
+  text-transform: capitalize;
+}
+
 @media screen and (min-width: 600px) {
   .mobile-only {
     display: none;

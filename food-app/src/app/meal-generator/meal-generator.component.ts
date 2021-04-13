@@ -1,7 +1,5 @@
+import { MealService } from './../../assets/meal.service';
 import { Component, OnInit } from '@angular/core';
-import { dinnerRecipes } from 'src/assets/dinner-recipes';
-import { breakfastRecipes } from 'src/assets/breakfast-recipes';
-import { lunchRecipes } from 'src/assets/lunch-recipes';
 
 @Component({
   selector: 'app-meal-generator',
@@ -9,24 +7,30 @@ import { lunchRecipes } from 'src/assets/lunch-recipes';
   styleUrls: ['./meal-generator.component.scss'],
 })
 export class MealGeneratorComponent implements OnInit {
-  recipeTypes = [
-    {
-      name: 'Breakfast',
-      recipes: breakfastRecipes,
-    },
-    { name: 'Lunch', recipes: lunchRecipes },
-    {
-      name: 'Dinner',
-      recipes: dinnerRecipes,
-    },
-  ];
+  constructor(public mealService: MealService) {}
 
-  recipeIndices: Array<number> = [];
+  public mealCategories = this.mealService.getAllMealCategories();
+  public mealIndices: Array<number> = [];
 
   getRandomRecipes() {
-    for (let i = 0; i < this.recipeTypes.length; i++) {
+    for (let i = 0; i < this.mealCategories.length; i++) {
       //get random number
       this.getNewRecipe(i);
+    }
+  }
+
+  getNewRecipe(index: number) {
+    //get old index
+    let oldIndex = this.mealIndices[index];
+
+    //asign new random value
+    this.mealIndices[index] = this.getRandomNumber(
+      this.mealCategories[index].length
+    );
+
+    //loop this function if it is the same index again
+    if (this.mealIndices[index] === oldIndex) {
+      this.getNewRecipe(index);
     }
   }
 
@@ -35,22 +39,7 @@ export class MealGeneratorComponent implements OnInit {
     return randomNumber;
   }
 
-  getNewRecipe(index: number) {
-    //get old index
-    let oldIndex = this.recipeIndices[index];
-
-    //asign new random value
-    this.recipeIndices[index] = this.getRandomNumber(
-      this.recipeTypes[index].recipes.length
-    );
-
-    //loop this function if it is the same index again
-    if (this.recipeIndices[index] === oldIndex) {
-      this.getNewRecipe(index);
-    }
-  }
-
-  getRecipeRating(rating: number, maxRating: number) {
+  getRecipeRating(rating: number, maxRating: number = 5) {
     const stars = [];
 
     let starsRemaining = rating;
@@ -59,7 +48,7 @@ export class MealGeneratorComponent implements OnInit {
       let star = 0;
       if (starsRemaining >= 1) {
         star = 1;
-      } else if (starsRemaining > 0) {
+      } else if (Math.round(starsRemaining * 2) / 2 > 0.5) {
         star = 0.5;
       }
 
@@ -70,7 +59,15 @@ export class MealGeneratorComponent implements OnInit {
     return stars;
   }
 
-  ngOnInit() {
+  getRecipeTime(time: number, maxRating: number = 3) {
+    const maxTime = 1.5;
+    var timeRating = (time / maxTime) * maxRating;
+
+    return this.getRecipeRating(timeRating, maxRating);
+  }
+
+  ngOnInit(): void {
     this.getRandomRecipes();
+    console.log(this.mealCategories);
   }
 }
