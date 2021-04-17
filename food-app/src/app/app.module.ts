@@ -8,19 +8,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularMaterialModule } from '../assets/angular-material.module';
-import { SideNavComponent } from './side-nav/side-nav.component';
 import { MealGeneratorComponent } from './meal-generator/meal-generator.component';
 import { MealListComponent } from './meal-list/meal-list.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SideNavComponent,
-    MealGeneratorComponent,
-    MealListComponent,
-    SideNavComponent,
-  ],
+  declarations: [AppComponent, MealGeneratorComponent, MealListComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
