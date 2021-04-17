@@ -11,8 +11,13 @@
   box-sizing: border-box;
 }
 
+a {
+  color: map-get($primary, 400);
+}
+
 main {
   height: 100%;
+  padding: 50px 25px;
   width: 1050px;
   max-width: 100%;
   margin: 0 auto;
@@ -40,10 +45,33 @@ mat-sidenav[style] {
   transform: none !important;
 }
 
+mat-card {
+  min-height: 100vh;
+  width: clamp(400px, 900px, 100vw);
+  padding: 0 !important;
+  margin: auto;
+}
+
+mat-card-content {
+  padding: 35px 50px 100px;
+}
+
+mat-card-title {
+  background-color: mat-color($primary);
+  color: white;
+  padding: 35px 50px;
+  margin: 0 !important;
+  width: 100%;
+}
+
 //classes
 
 .full-width {
   width: 100%;
+}
+
+.margin-left {
+  margin-left: 25px;
 }
 
 .font-capital {
@@ -60,4 +88,35 @@ mat-sidenav[style] {
   .full-width-mobile {
     width: 100%;
   }
+}
+
+@media print {
+  .hidden-on-print {
+    display: none !important;
+  }
+
+  .print-page-break-before {
+    display: block !important;
+    position: relative !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: always !important;
+    float: none !important;
+    border: none !important;
+  }
+  mat-card {
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+  }
+}
+
+.print-page-break-before {
+  display: block !important;
+  position: relative !important;
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+  page-break-after: always !important;
+  float: none !important;
+  border: none !important;
 }

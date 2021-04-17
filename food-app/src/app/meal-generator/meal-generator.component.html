@@ -1,82 +1,114 @@
-<main>
-  <h1 class="mat-display-2">Meal Generator</h1>
+<mat-card>
+  <mat-card-title class="mat-display-2 hidden-on-print"
+    >Vegan Meal Generator</mat-card-title
+  >
 
-  <div fxLayout="column" fxLayoutGap="35px">
-    <div
-      *ngFor="let meals of mealCategories; index as i"
-      fxLayout="column"
-      fxLayoutGap="15px"
-    >
-      <h1 class="font-capital">{{ meals[mealIndices[i]].category }}</h1>
+  <mat-card-content>
+    <div fxLayout="column" fxLayoutGap="35px">
       <div
-        fxLayout="row"
-        fxLayout.xs="column"
+        *ngFor="let meals of mealTypes; index as i"
+        fxLayout="column"
         fxLayoutGap="15px"
-        fxLayoutAlign="start start"
       >
-        <mat-expansion-panel fxFlex="1 2 auto">
-          <mat-expansion-panel-header>
-            <mat-panel-title fxFlex="25" fxLayoutAlign="start center">
-              {{ meals[mealIndices[i]].name }}</mat-panel-title
-            >
-            <mat-panel-description
-              fxFlex="40"
-              fxFlex.sm="60"
-              fxFlex.xs="60"
+        <h1 class="font-capital">
+          {{ mealService.MEALTYPES[i].name }}
+        </h1>
+        <div
+          fxLayout="row"
+          fxLayout.xs="column"
+          fxLayoutGap="15px"
+          fxLayoutAlign="start start"
+        >
+          <mat-expansion-panel fxFlex="1 2 auto">
+            <mat-expansion-panel-header
+              fxLayout="row"
               fxLayoutAlign="space-between center"
             >
-              <div>
-                <ng-container
-                  *ngFor="
-                    let star of getRecipeRating(meals[mealIndices[i]].rating)
-                  "
-                  [ngSwitch]="star"
-                >
-                  <i *ngSwitchCase="0.5" class="material-icons">star_half</i>
-                  <i *ngSwitchCase="1" class="material-icons">star</i>
-                  <i *ngSwitchDefault class="material-icons">star_border</i>
-                </ng-container>
-              </div>
-              <div>
-                <ng-container
-                  *ngFor="let time of getRecipeTime(meals[mealIndices[i]].time)"
-                  [ngSwitch]="time"
-                >
-                  <i *ngSwitchCase="1" class="material-icons">watch_later</i>
-                  <i *ngSwitchDefault class="material-icons">schedule</i>
-                </ng-container>
-              </div>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
+              <mat-panel-title
+                fxFlex="60"
+                fxLayoutAlign="start center"
+                class="font-capital"
+              >
+                {{ meals[mealIndices[i]].title }}</mat-panel-title
+              >
+              <mat-panel-description
+                fxFlex="40"
+                fxLayoutAlign="flex-end center"
+              >
+                <div>
+                  <ng-container
+                    *ngFor="
+                      let star of getRecipeRating(
+                        meals[mealIndices[i]].spoonacularScore,
+                        100
+                      )
+                    "
+                    [ngSwitch]="star"
+                  >
+                    <i *ngSwitchCase="0.5" class="material-icons">star_half</i>
+                    <i *ngSwitchCase="1" class="material-icons">star</i>
+                    <i *ngSwitchDefault class="material-icons">star_border</i>
+                  </ng-container>
+                </div>
+                <div id="time-rating" class="margin-left">
+                  <ng-container
+                    *ngFor="
+                      let time of getRecipeRating(
+                        meals[mealIndices[i]].readyInMinutes,
+                        60,
+                        3
+                      )
+                    "
+                    [ngSwitch]="time"
+                  >
+                    <i *ngSwitchCase="1" class="material-icons">watch_later</i>
+                    <i *ngSwitchDefault class="material-icons">schedule</i>
+                  </ng-container>
+                </div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
 
-          <p>{{ meals[mealIndices[i]].description }}</p>
-          <div fxLayout="row wrap">
-            <ng-container
-              *ngFor="let img of meals[mealIndices[i]].images; index as a"
-            >
-              <img *ngIf="a < 3" [src]="img" fxFlex="50%" />
-            </ng-container>
-          </div>
+            <div class="mat-expansion-panel-body">
+              <img [src]="meals[mealIndices[i]].image" />
+              <p [innerHTML]="meals[mealIndices[i]].summary">
+                {{ meals[mealIndices[i]].summary }}
+              </p>
+            </div>
 
-          <mat-action-row>
-            <a
-              mat-raised-button
-              [href]="meals[mealIndices[i]].url"
-              target="_blank"
-            >
-              Zum Rezept
-            </a>
-          </mat-action-row>
-        </mat-expansion-panel>
-        <button mat-button (click)="getNewRecipe(i)" class="full-width-mobile">
-          <a class="mobile-only">Get Random </a>
+            <mat-action-row fxLayout="row" fxLayoutAlign="space-between center">
+              <div>
+                <strong>Time: </strong>
+                {{ meals[mealIndices[i]].readyInMinutes }} min
+              </div>
+              <a
+                mat-raised-button
+                [href]="meals[mealIndices[i]].sourceUrl"
+                target="_blank"
+              >
+                Zum Rezept
+              </a>
+            </mat-action-row>
+          </mat-expansion-panel>
+          <button
+            mat-stroked-button
+            (click)="getNewRecipe(i)"
+            class="full-width-mobile hidden-on-print"
+          >
+            <a class="mobile-only">Get Random </a>
+            <i class="material-icons">shuffle</i>
+          </button>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="25px" class="hidden-on-print">
+        <button fxFlex="50" mat-stroked-button (click)="getRandomRecipes()">
+          Get new Recipes
           <i class="material-icons">shuffle</i>
+        </button>
+        <button fxFlex="50" mat-raised-button (click)="preparePrint()">
+          Download Meal Plan
+          <i class="material-icons">download</i>
         </button>
       </div>
     </div>
-    <button mat-raised-button (click)="getRandomRecipes()">
-      Get new Recipes
-      <i class="material-icons">shuffle</i>
-    </button>
-  </div>
-</main>
+  </mat-card-content>
+</mat-card>

@@ -1,12 +1,15 @@
 mat-expansion-panel {
+  max-width: 100%;
   img {
     height: 250px;
+    padding: 0 0 25px 25px;
+    float: right;
     object-fit: cover;
+    object-position: center;
   }
 
-  img:last-child:nth-child(odd) {
-    width: 100%;
-    max-width: unset !important;
+  p {
+    text-align: justify;
   }
 }
 
@@ -14,7 +17,20 @@ mat-expansion-panel + button {
   height: 48px;
 }
 
-ngb-rating {
-  color: #ffc107;
-  font-size: 80px;
+mat-panel-title {
+  overflow: hidden;
+  white-space: nowrap; /* Don't forget this one */
+  text-overflow: ellipsis;
+  height: 50px;
+  line-height: 50px;
+}
+
+.mat-expansion-panel-body {
+  padding-top: 15px !important;
+}
+
+@media screen and (max-width: 800px) {
+  #time-rating {
+    display: none;
+  }
 }

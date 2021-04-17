@@ -1,0 +1,18 @@
+show data correctly (time, rating)
+show more intersting data
+
+which dishTypes are tehre
+
+
+insert all json
+
+
+BREAKFAST EMPTY
+
+search for breakfast recipes
+
+search for many recipes 2k?
+
+check if id is in there already
+
+2

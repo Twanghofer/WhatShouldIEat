@@ -11,6 +11,7 @@ import { AngularMaterialModule } from '../assets/angular-material.module';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { MealGeneratorComponent } from './meal-generator/meal-generator.component';
 import { MealListComponent } from './meal-list/meal-list.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MealListComponent } from './meal-list/meal-list.component';
     BrowserAnimationsModule,
     FlexLayoutModule,
     AngularMaterialModule,
+    HttpClientModule,
   ],
   providers: [MealService],
   bootstrap: [AppComponent],

@@ -1,5 +1,7 @@
 import { MealService } from './../../assets/meal.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { MatExpansionPanel } from '@angular/material/expansion';
+import { waitForAsync } from '@angular/core/testing';
 
 @Component({
   selector: 'app-meal-generator',
@@ -7,13 +9,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./meal-generator.component.scss'],
 })
 export class MealGeneratorComponent implements OnInit {
+  @ViewChildren(MatExpansionPanel) panels:
+    | QueryList<MatExpansionPanel>
+    | undefined;
   constructor(public mealService: MealService) {}
 
-  public mealCategories = this.mealService.getAllMealCategories();
+  public mealTypes: Array<any> = [];
   public mealIndices: Array<number> = [];
 
   getRandomRecipes() {
-    for (let i = 0; i < this.mealCategories.length; i++) {
+    for (let i = 0; i < this.mealTypes.length; i++) {
       //get random number
       this.getNewRecipe(i);
     }
@@ -25,7 +30,7 @@ export class MealGeneratorComponent implements OnInit {
 
     //asign new random value
     this.mealIndices[index] = this.getRandomNumber(
-      this.mealCategories[index].length
+      this.mealTypes[index].length
     );
 
     //loop this function if it is the same index again
@@ -39,16 +44,16 @@ export class MealGeneratorComponent implements OnInit {
     return randomNumber;
   }
 
-  getRecipeRating(rating: number, maxRating: number = 5) {
+  getRecipeRating(rating: number, maxRating: number, maxPoints: number = 5) {
+    var starsRemaining = (rating / maxRating) * maxPoints;
+
     const stars = [];
 
-    let starsRemaining = rating;
-
-    for (let i = 0; i < maxRating; i++) {
+    for (let i = 0; i < maxPoints; i++) {
       let star = 0;
       if (starsRemaining >= 1) {
         star = 1;
-      } else if (Math.round(starsRemaining * 2) / 2 > 0.5) {
+      } else if (Math.round(starsRemaining * 2) / 2 >= 0.5) {
         star = 0.5;
       }
 
@@ -59,15 +64,37 @@ export class MealGeneratorComponent implements OnInit {
     return stars;
   }
 
-  getRecipeTime(time: number, maxRating: number = 3) {
-    const maxTime = 1.5;
-    var timeRating = (time / maxTime) * maxRating;
+  preparePrint() {
+    this.expandAllPanels();
+  }
 
-    return this.getRecipeRating(timeRating, maxRating);
+  openPrint() {
+    window.print();
+  }
+
+  expandAllPanels() {
+    let allPanelsExpanded = false;
+    this.panels?.forEach((panel) => {
+      panel.expanded = true;
+      if (this.panels?.last === panel) {
+        allPanelsExpanded = true;
+      }
+    });
+    let interval = setInterval(() => {
+      if (allPanelsExpanded) {
+        clearInterval(interval);
+        this.openPrint();
+      }
+    }, 500);
   }
 
   ngOnInit(): void {
+    for (let i = 0; i < this.mealService.MEALTYPES.length; i++) {
+      this.mealTypes.push(
+        this.mealService.getAllMealsOfType(this.mealService.MEALTYPES[i])
+      );
+    }
+
     this.getRandomRecipes();
-    console.log(this.mealCategories);
   }
 }

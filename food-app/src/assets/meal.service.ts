@@ -1,45 +1,93 @@
+import { MEALTYPES } from 'src/assets/meal';
 import { MEALS } from './meal-data';
-import { Meal, MEALCATEGORIES } from './meal';
+import { MealType } from './meal';
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class MealService {
   constructor() {}
 
-  getAllMeals(): Meal[] {
+  MEALTYPES = MEALTYPES;
+
+  getAllMeals(): any[] {
     return MEALS;
   }
 
-  getAllMealCategories(): Array<Meal[]> {
-    let allmealCategorys: Array<Meal[]> = [];
-
-    const types = Object.values(MEALCATEGORIES);
-    for (let i = 0; i < types.length; i++) {
-      if (this.getAllMealsOfType(types[i]).length > 0) {
-        allmealCategorys.push(this.getAllMealsOfType(types[i]));
-      }
-    }
-
-    return allmealCategorys;
-  }
-
-  getAllMealsOfType(mealCategory: string): Meal[] {
-    let allMeals: Meal[] = [];
+  getAllMealsOfType(type: MealType): Array<any> {
+    var meals: Array<any> = [];
 
     MEALS.forEach((meal) => {
-      if (meal.category.includes(mealCategory)) {
-        allMeals.push(meal);
+      if (this.isMealOfType(meal, type)) {
+        if (meals.indexOf(meal, 0) === -1) {
+          meal.title = meal.title.toLowerCase();
+          meals.push(meal);
+        }
       }
     });
 
-    return allMeals;
+    return meals;
   }
 
-  getBestRatedMeals(): Meal[] {
-    return MEALS.sort((a, b) => b.rating - a.rating).slice(0, 3);
+  isMealOfType(meal: any, type: MealType): boolean {
+    if (!meal.title) return false;
+
+    let isType = false;
+
+    type.keywords.forEach((keyword) => {
+      meal.dishTypes.forEach((dishType: string) => {
+        if (keyword.includes(dishType)) {
+          isType = true;
+        }
+      });
+    });
+
+    return isType;
   }
 
-  getMeal(name: string): Meal | undefined {
-    return MEALS.find((meal) => meal.name === name);
-  }
+  // getAllMealCategories(): Array<Object[]> {
+  //   let allmealCategorys: Array<Object[]> = [];
+
+  //   MEALCATEGORIES.forEach((category) => {
+  //     if (this.getAllMealsOfType(category.keywords).length > 0) {
+  //       allmealCategorys.push(this.getAllMealsOfType(category.keywords));
+  //     }
+  //   });
+
+  //   return allmealCategorys;
+  // }
+
+  // getAllMealsOfType(keywords: string[]): Object[] {
+  //   let allMeals: Object[] = [];
+
+  //   MEALS.forEach((meal) => {
+  //     keywords.forEach((keyword) => {
+  //       if (meal.category.includes(keyword)) {
+  //         allMeals.push(meal);
+  //       }
+  //     });
+  //   });
+
+  //   return allMeals;
+  // }
+
+  // getMealCategory(meal: Object = { dishTypes: 'test' }): MealType {
+  //   var mealCategory = new MealType();
+  //   return mealCategory;
+  //   MEALCATEGORIES.forEach((category) => {
+  //     category.keywords.forEach((keyword) => {
+  //       if (meal.dishTypes.includes(keyword)) {
+  //         mealCategory = category;
+  //       }
+  //     });
+  //   });
+  //   return mealCategory;
+  // }
+
+  // getBestRatedMeals(): Object[] {
+  //   return MEALS.sort((a, b) => b.rating - a.rating).slice(0, 3);
+  // }
+
+  // getMeal(name: string): Object | undefined {
+  //   return MEALS.find((meal) => meal.name === name);
+  // }
 }

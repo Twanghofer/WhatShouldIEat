@@ -1,24 +1,29 @@
-class Meal {
+class MealType {
   name!: string;
-  category!: string;
-  description: string;
-  time: number;
-  rating: number;
-  url!: string;
-  images?: string[] = [];
-
-  constructor(description: string = '', time: number = 0, rating: number = 0) {
-    this.description = description;
-    this.time = time;
-    this.rating = rating;
-  }
+  keywords!: string[];
 }
 
-const MEALCATEGORIES = {
-  breakfast: 'Breakfast',
-  lunch: 'Lunch',
-  dinner: 'Dinner',
-  dessert: 'Dessert',
-};
+const MEALTYPES: MealType[] = [
+  {
+    name: 'Breakfast',
+    keywords: ['breakfast', 'brunch'],
+  },
+  {
+    name: 'Lunch',
+    keywords: ['lunch', 'main', 'main course', 'main dish', 'World Cuisine'],
+  },
+  {
+    name: 'Dinner',
+    keywords: ['dinner', 'main', 'main course', 'main dish', 'World Cuisine'],
+  },
+  {
+    name: 'Desserts & Snacks',
+    keywords: ['dessert', 'snack', 'appetizer', 'antipasto', 'fingerfood'],
+  },
+  {
+    name: 'Side Dish',
+    keywords: ['side dish', 'salad', 'soup'],
+  },
+];
 
-export { Meal, MEALCATEGORIES };
+export { MealType, MEALTYPES };
