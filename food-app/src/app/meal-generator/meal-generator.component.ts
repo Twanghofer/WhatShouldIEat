@@ -1,7 +1,6 @@
 import { MealService } from './../../assets/meal.service';
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { waitForAsync } from '@angular/core/testing';
 
 @Component({
   selector: 'app-meal-generator',
@@ -86,6 +85,19 @@ export class MealGeneratorComponent implements OnInit {
         this.openPrint();
       }
     }, 500);
+  }
+
+  displayTime(minutes: number): string {
+    let hours = 0;
+
+    while (minutes >= 60) {
+      minutes -= 60;
+      hours++;
+    }
+
+    let time = hours > 0 ? hours + 'h ' : '';
+    time += minutes > 0 ? minutes + 'min ' : '';
+    return time;
   }
 
   ngOnInit(): void {

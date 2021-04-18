@@ -14,8 +14,8 @@
           {{ mealService.MEALTYPES[i].name }}
         </h1>
         <div
-          fxLayout="row"
           fxLayout.xs="column"
+          fxLayout="row"
           fxLayoutGap="15px"
           fxLayoutAlign="start start"
         >
@@ -25,14 +25,14 @@
               fxLayoutAlign="space-between center"
             >
               <mat-panel-title
-                fxFlex="60"
                 fxLayoutAlign="start center"
                 class="font-capital"
               >
                 {{ meals[mealIndices[i]].title }}</mat-panel-title
               >
               <mat-panel-description
-                fxFlex="40"
+                fxFlex="45"
+                fxFlex.xs="35"
                 fxLayoutAlign="flex-end center"
               >
                 <div>
@@ -78,7 +78,7 @@
             <mat-action-row fxLayout="row" fxLayoutAlign="space-between center">
               <div>
                 <strong>Time: </strong>
-                {{ meals[mealIndices[i]].readyInMinutes }} min
+                {{ displayTime(meals[mealIndices[i]].readyInMinutes) }}
               </div>
               <a
                 mat-raised-button
@@ -105,8 +105,8 @@
           <i class="material-icons">shuffle</i>
         </button>
         <button fxFlex="50" mat-raised-button (click)="preparePrint()">
-          Download Meal Plan
-          <i class="material-icons">download</i>
+          Print Meal Plan
+          <i class="material-icons"> print</i>
         </button>
       </div>
     </div>

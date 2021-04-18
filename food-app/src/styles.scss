@@ -11,16 +11,8 @@
   box-sizing: border-box;
 }
 
-a {
+.mat-expansion-panel-body a[href] {
   color: map-get($primary, 400);
-}
-
-main {
-  height: 100%;
-  padding: 50px 25px;
-  width: 1050px;
-  max-width: 100%;
-  margin: 0 auto;
 }
 
 .content-container {
@@ -47,13 +39,13 @@ mat-sidenav[style] {
 
 mat-card {
   min-height: 100vh;
-  width: clamp(400px, 900px, 100vw);
+  width: clamp(400px, 1024px, 100vw);
   padding: 0 !important;
   margin: auto;
 }
 
 mat-card-content {
-  padding: 35px 50px 100px;
+  padding: 35px 50px 75px;
 }
 
 mat-card-title {
@@ -87,6 +79,12 @@ mat-card-title {
 @media screen and (max-width: 599px) {
   .full-width-mobile {
     width: 100%;
+  }
+}
+
+@media screen {
+  .hidden-on-print[fxFlex] {
+    display: flex !important;
   }
 }
 
